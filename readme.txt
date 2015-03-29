@@ -29,7 +29,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 12. All options on your wordpress admin area
 13. You can bind any object click with Contact Form
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=contactUs&return=NEED_PASTE" target="_blank">Contact Form Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=contactUs&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Contact Form Live Demo</a><br>
 
 
 = Сall Me Now =
@@ -46,7 +46,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 12. All options on your wordpress admin area
 13. You can bind open popup with any block on your website click
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=callMe&return=NEED_PASTE" target="_blank">Сall Me Now Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=callMe&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Сall Me Now Live Demo</a><br>
 
 = Following =
 1. Many design options
@@ -58,7 +58,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 7. All options on your wordpress admin area
 8. You can bind open popup with any block on your website click
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=follow&return=NEED_PASTE" target="_blank">Following Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=follow&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Following Live Demo</a><br>
 
 
 = Thank Popup =
