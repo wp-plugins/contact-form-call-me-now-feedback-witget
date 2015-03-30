@@ -23,7 +23,7 @@
 * @package  Wordpress_Plugin
 * @author   ShemOtechnik Profitquery Team <support@profitquery.com>
 * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version  SVN: 1.0
+* @version  SVN: 1.0.1
 */
 
 class ProfitQueryFeedbackWidgetsClass
@@ -207,15 +207,24 @@ class ProfitQueryFeedbackWidgetsClass
 	
 	function setDefaultProductData(){
 		//Other default params
+				
+		if(!$this->_options[follow]){
+			$this->_options[follow][disabled] = 1;
+		}
+		if(!$this->_options[callMe]){
+			$this->_options[callMe][disabled] = 1;
+		}			
 		
-		if(!$this->_options[follow]) $this->_options[follow][disabled] = 1;		
-		
-		if(!$this->_options[sharingSideBar]){
-			$this->_options[sharingSideBar][disabled] = 0;
-			$this->_options[sharingSideBar][socnet] = array('FB'=>1, 'GP'=>1, 'TW'=>1, 'LI'=>1, 'MailTo'=>1);
-			$this->_options[sharingSideBar][position] = 'pq_left pq_middle';
-			$this->_options[sharingSideBar][design][color] = 'c4';
-			$this->_options[sharingSideBar][design][size] = 'x40';
+		if(!$this->_options[contactUs]){
+			$this->_options[contactUs][disabled] = 0;
+			$this->_options[contactUs][position] = 'pq_right pq_bottom';
+			$this->_options['contactUs']['typeWindow'] = 'pq_medium';				
+			$this->_options['contactUs']['background'] = 'bg_grey';
+			$this->_options['contactUs']['button_color'] = 'btn_lightblue';				
+			$this->_options['contactUs']['title'] = 'Contact Us';
+			$this->_options['contactUs']['buttonTitle'] = 'Send';				
+			$this->_options['contactUs']['loader_background'] = 'bg_black';
+			$this->_options['contactUs']['afterProceed'][thank] = 1;
 		}
 		
 		if(!$this->_options[thankPopup]){
@@ -224,6 +233,10 @@ class ProfitQueryFeedbackWidgetsClass
 			$this->_options['thankPopup']['buttonTitle'] = 'Close';
 			$this->_options['thankPopup']['background'] = 'bg_grey';
 			$this->_options['thankPopup']['img'] = 'img_10.png';
+		}				
+		
+		if(!$this->_options['adminEmail']){
+			$this->_options['adminEmail'] = get_settings('admin_email');
 		}
 		
 		
