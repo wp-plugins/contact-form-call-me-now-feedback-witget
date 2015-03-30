@@ -4,7 +4,7 @@ Donate link: http://profitquery.com/contact_widgets.html
 Tags: AJAX, Akismet, contact, aio, aio widgets, profitquery, profitquery widgets, free widgets, free, contact button, contact form, contact form plugin, contact me, contacts, call me, call me back, feedback, feedback form, post feedback, web-page feedback, widgets, widget, bookmark, floating, popup
 Requires at least: 2.9
 Tested up to: 4.1.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPL 2. See License below for copyright jots and tittles.
 
 Simply widgets for growth website feedback's, collect customers phone numbers, folllowers in social media and all for free.
@@ -125,6 +125,9 @@ All of the options required through this plugin require javascript. JavaScript m
 
 
 == Changelog ==
+= 1.0.3 =
+domain third level api Key update
+
 = 1.0.2 =
 profitquery js lib update
 
