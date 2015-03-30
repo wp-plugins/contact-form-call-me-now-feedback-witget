@@ -22,7 +22,7 @@
 * Plugin Name: Contact Form + Call Me Now | Feedback Witget
 * Plugin URI: http://profitquery.com/feedback_witgets.html
 * Description: Simply widgets for growth website feedback's, collect customers phone numbers, folllowers in social media and all for free.
-* Version: 1.0.1
+* Version: 1.0.2
 *
 * Author: Profitquery Team <support@profitquery.com>
 * Author URI: http://profitquery.com/?utm_campaign=subscribe_widgets_wp
