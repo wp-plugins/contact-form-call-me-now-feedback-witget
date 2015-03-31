@@ -23,7 +23,7 @@
 * @package  Wordpress_Plugin
 * @author   ShemOtechnik Profitquery Team <support@profitquery.com>
 * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version  SVN: 1.0.3
+* @version  SVN: 1.0.5
 */
 
 class ProfitQueryFeedbackWidgetsClass
@@ -757,13 +757,7 @@ class ProfitQueryFeedbackWidgetsClass
 								";
 							?>							
 							
-							<div class="clear"></div>
-							<div style="margin: 15px 0 20px;">
-							<label style="display: block;">			
-								<p style="padding:0;">Send Mail To</p>
-								<input type="text" name="adminEmail" value="<?php echo stripslashes($this->_options[adminEmail])?>">
-							</label>		
-							</div>
+							<div class="clear"></div>							
 							<p style="font-family: pt sans narrow; font-size: 19px; margin: 20px 0 10px;">Only Design Live Demo</p>
 							<img src="<?php echo plugins_url('images/browser.png', __FILE__);?>" style="width: 100%; margin-bottom: -6px;" />
 							<div style="transform-origin: 0 0; transform: scale(0.8); width: 125%; height: 450px; box-sizing: border-box; border: 1px solid lightgrey;">
@@ -891,13 +885,7 @@ class ProfitQueryFeedbackWidgetsClass
 								";
 							?>							
 							<div class="clear"></div>
-							
-							<div style="margin: 15px 0 20px;">
-							<label style="display: block;">			
-								<p style="padding:0;">Send Mail To</p>
-								<input type="text" name="adminEmail" value="<?php echo stripslashes($this->_options[adminEmail])?>">
-							</label>		
-							</div>	
+														
 							<p style="font-family: pt sans narrow; font-size: 19px; margin: 20px 0 10px;">Only Design Live Demo</p>
 							<img src="<?php echo plugins_url('images/browser.png', __FILE__);?>" style="width: 100%; margin-bottom: -6px;" />
 							<div style="transform-origin: 0 0; transform: scale(0.8); width: 125%; height: 450px; box-sizing: border-box; border: 1px solid lightgrey;">
@@ -923,8 +911,17 @@ class ProfitQueryFeedbackWidgetsClass
 							</div>
 						
 						<a href="javascript:void(0)" onclick="document.getElementById('Call_Me_Back').style.display='none';"><div class="pq_close"></div></a>
-						</div>
+						</div>						
 					</div>
+						<div class="pq-panel-body" style="background: #F3F3F3; padding: 20px 0 20px; margin: 0 15px;">
+							<div class="pq-sm-12">
+								<div class="pq-sm-10 icons" style="margin: 0 auto; float: none;">
+									<label>										
+										<input type="text" name="adminEmail" value="<?php echo stripslashes($this->_options[adminEmail])?>">
+									</label>
+								</div>
+							</div>
+						</div>
 						<input type="submit" class="btn_m_red" value="Save changes">
 						<a href="mailto:support@profitquery.com" target="_blank" class="pq_help">Need help?</a>
 						</form>
