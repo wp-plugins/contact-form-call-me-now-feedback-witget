@@ -22,7 +22,7 @@
 * Plugin Name: Contact Form + Call Me Now | Feedback Widget
 * Plugin URI: http://profitquery.com/feedback_witgets.html
 * Description: Simply widgets for growth website feedback's, collect customers phone numbers, folllowers in social media and all for free.
-* Version: 1.0.6
+* Version: 1.0.7
 *
 * Author: Profitquery Team <support@profitquery.com>
 * Author URI: http://profitquery.com/?utm_campaign=subscribe_widgets_wp
@@ -69,9 +69,17 @@ add_action('init', 'profitquery_feedback_widgets_init');
 function profitquery_feedback_widgets_init(){
 	global $profitquery;	
 	if ( !is_admin() && $profitquery[apiKey] && !$profitquery['errorApiKey'] && !$profitquery['aio_widgets_loaded']){
+		add_action('wp_head', 'profitquery_feedback_widgets_hack_for_cach_code');
 		wp_register_script('lite_profitquery_lib', plugins_url().'/'.PROFITQUERY_FEEDBACK_WIDGETS_PLUGIN_NAME.'/js/lite.profitquery.min.js?apiKey='.$profitquery[apiKey]);		
 		wp_enqueue_script('lite_profitquery_lib');		
 		add_action('wp_footer', 'profitquery_feedback_widgets_insert_code');
+	}
+}
+
+function profitquery_feedback_widgets_hack_for_cach_code(){
+	global $profitquery;
+	if($profitquery[apiKey]){
+		echo '<script>var profitqueryLiteAPIKey="'.$profitquery[apiKey].'";</script>';
 	}
 }
 
