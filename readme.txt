@@ -1,7 +1,7 @@
 === Contact Form + Call Me Now | Feedback Widget ===
 Contributors: schemotechnik, ilya_v, frenly_girl
 Donate link: http://profitquery.com/contact_widgets.html
-Tags: AJAX, Akismet, contact, aio, aio widgets, profitquery, profitquery widgets, free widgets, free, contact button, contact form, contact form plugin, contact me, contacts, call me, call me back, feedback, feedback form, post feedback, web-page feedback, widgets, widget, bookmark, floating, popup, admin , ecommerce, email, javascript, plugin, widget, widgets, wordpress
+Tags: contact, aio widgets, profitquery, profitquery widgets, free widgets, contact button, contact form, contact form plugin, contact me, visitor information, call me, call me back, feedback, feedback form, post feedback, web-page feedback, widgets, widget, bookmark, floating, popup, ecommerce, email, plugin, widget, widgets
 Requires at least: 2.9
 Tested up to: 4.1.1
 Stable tag: 1.0.7
