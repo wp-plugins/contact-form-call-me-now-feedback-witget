@@ -4,7 +4,7 @@ Donate link: http://profitquery.com/contact_widgets.html
 Tags: contact, aio widgets, profitquery, profitquery widgets, free widgets, contact button, contact form, contact form plugin, contact me, visitor information, call me, call me back, feedback, feedback form, post feedback, web-page feedback, widgets, widget, bookmark, floating, popup, ecommerce, email, plugin, widget, widgets
 Requires at least: 2.9
 Tested up to: 4.1.1
-Stable tag: 1.0.7
+Stable tag: 2.0.2
 License: GPL 2. See License below for copyright jots and tittles.
 
 Simply widgets for growth website feedback's, collect customers phone numbers, folllowers in social media and all for free.
@@ -29,7 +29,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 12. All options on your wordpress admin area
 13. You can bind any object click with Contact Form
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=contactUs&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Contact Form Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel_v2.html?p=contactUs&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Contact Form Live Demo</a><br>
 
 
 = Сall Me Now =
@@ -46,7 +46,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 12. All options on your wordpress admin area
 13. You can bind open popup with any block on your website click
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=callMe&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Сall Me Now Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel_v2.html?p=callMe&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Сall Me Now Live Demo</a><br>
 
 = Following =
 1. Many design options
@@ -58,7 +58,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 7. All options on your wordpress admin area
 8. You can bind open popup with any block on your website click
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=follow&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Following Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel_v2.html?p=follow&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Following Live Demo</a><br>
 
 
 = Thank Popup =
@@ -73,7 +73,7 @@ Simply widgets for growth website feedback's, collect customers phone numbers, f
 9. All options on your wordpress admin area
 10. You can bind open popup with any block on your website click
 
-<br><a href="http://profitquery.com/aio_wp_demo_carousel.html?p=thankPopup&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Thank Popup Live Demo</a><br>
+<br><a href="http://profitquery.com/aio_wp_demo_carousel_v2.html?p=thankPopup&return=https://wordpress.org/plugins/contact-form-call-me-now-feedback-witget/" target="_blank">Thank Popup Live Demo</a><br>
 
 <br>
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -125,6 +125,20 @@ All of the options required through this plugin require javascript. JavaScript m
 
 
 == Changelog ==
+
+= 2.0.2 =
+js update
+
+= 2.0.1 =
+mobile overlay fixed
+
+= 2.0 =
+major update:
+add 2d 3d animation
+add hover effects
+refactoring icons
+sript load time
+
 = 1.0.7 =
 add hack for cache js
 

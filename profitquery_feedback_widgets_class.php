@@ -23,7 +23,7 @@
 * @package  Wordpress_Plugin
 * @author   ShemOtechnik Profitquery Team <support@profitquery.com>
 * @license  http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version  SVN: 1.0.7
+* @version  SVN: 2.0.2
 */
 
 class ProfitQueryFeedbackWidgetsClass
@@ -174,8 +174,9 @@ class ProfitQueryFeedbackWidgetsClass
 		//design
 		if(isset($data[design])){
 			unset($return[design]);
-			if($data[design][form] == 'square') $data[design][form]='';
-			$return[design] = $data[design][size].$data[design][form]." ".$data[design][color]." ".$data[design][shadow];
+			if($data[design][form] == 'square' || $data[design][form] == 'pq_square') $data[design][form]='';
+			if(!strstr($data[design][form], 'pq_') && trim($data[design][form])) $data[design][form] = 'pq_'.$data[design][form];
+			$return[design] = $data[design][size]." ".$data[design][form]." ".$data[design][color]." ".$data[design][shadow];
 		}
 		
 		return $return;
@@ -225,6 +226,8 @@ class ProfitQueryFeedbackWidgetsClass
 			$this->_options['contactUs']['buttonTitle'] = 'Send';				
 			$this->_options['contactUs']['loader_background'] = 'bg_black';
 			$this->_options['contactUs']['afterProceed'][thank] = 1;
+			$this->_options[contactUs][animation] = 'bounceInDown';
+			$this->_options[contactUs][overlay] = 'over_iceblue_lt';
 		}
 		
 		if(!$this->_options[thankPopup]){
@@ -233,6 +236,8 @@ class ProfitQueryFeedbackWidgetsClass
 			$this->_options['thankPopup']['buttonTitle'] = 'Close';
 			$this->_options['thankPopup']['background'] = 'bg_grey';
 			$this->_options['thankPopup']['img'] = 'img_10.png';
+			$this->_options[thankPopup][animation] = 'bounceInDown';
+			$this->_options[thankPopup][overlay] = 'over_white';
 		}				
 		
 		if(!$this->_options['adminEmail']){
@@ -283,6 +288,8 @@ class ProfitQueryFeedbackWidgetsClass
 				if(trim($_POST[follow][title])) $this->_options['follow']['title'] = sanitize_text_field($_POST[follow][title]); else $this->_options['follow']['title'] = '';
 				if(trim($_POST[follow][sub_title])) $this->_options['follow']['sub_title'] = sanitize_text_field($_POST[follow][sub_title]); else $this->_options['follow']['sub_title'] = '';
 				if(trim($_POST[follow][background])) $this->_options['follow']['background'] = sanitize_text_field($_POST[follow][background]); else $this->_options['follow']['background'] = '';
+				if(trim($_POST[follow][animation])) $this->_options['follow']['animation'] = sanitize_text_field($_POST[follow][animation]); else $this->_options['follow']['animation'] = '';
+				if(trim($_POST[follow][overlay])) $this->_options['follow']['overlay'] = sanitize_text_field($_POST[follow][overlay]); else $this->_options['follow']['overlay'] = '';
 				if($_POST[follow][follow_socnet]){
 					if(trim($_POST[follow][follow_socnet][FB]) != '') $this->_options[follow][follow_socnet][FB] = sanitize_text_field($_POST[follow][follow_socnet][FB]); else $this->_options[follow][follow_socnet][FB] = '';
 					if(trim($_POST[follow][follow_socnet][TW]) != '') $this->_options[follow][follow_socnet][TW] = sanitize_text_field($_POST[follow][follow_socnet][TW]); else $this->_options[follow][follow_socnet][TW] = '';
@@ -301,6 +308,8 @@ class ProfitQueryFeedbackWidgetsClass
 				if(trim($_POST[thankPopup][background])) $this->_options['thankPopup']['background'] = sanitize_text_field($_POST[thankPopup][background]); else $this->_options['thankPopup']['background'] = '';
 				if(trim($_POST[thankPopup][img])) $this->_options['thankPopup']['img'] = sanitize_text_field($_POST[thankPopup][img]); else $this->_options['thankPopup']['img'] = '';
 				if(trim($_POST[thankPopup][imgUrl])) $this->_options['thankPopup']['imgUrl'] = sanitize_text_field($_POST[thankPopup][imgUrl]); else $this->_options['thankPopup']['imgUrl'] = '';				
+				if(trim($_POST[thankPopup][animation])) $this->_options['thankPopup']['animation'] = sanitize_text_field($_POST[thankPopup][animation]); else $this->_options['thankPopup']['animation'] = '';				
+				if(trim($_POST[thankPopup][overlay])) $this->_options['thankPopup']['overlay'] = sanitize_text_field($_POST[thankPopup][overlay]); else $this->_options['thankPopup']['overlay'] = '';				
 			}												
 			
 			//callMe
@@ -358,6 +367,8 @@ class ProfitQueryFeedbackWidgetsClass
 				if(trim($_POST[contactUs][button_color])) $this->_options['contactUs']['button_color'] = sanitize_text_field($_POST[contactUs][button_color]); else $this->_options['contactUs']['button_color'] = '';
 				if(trim($_POST[contactUs][img])) $this->_options['contactUs']['img'] = sanitize_text_field($_POST[contactUs][img]); else $this->_options['contactUs']['img'] = '';
 				if(trim($_POST[contactUs][imgUrl])) $this->_options['contactUs']['imgUrl'] = sanitize_text_field($_POST[contactUs][imgUrl]); else $this->_options['contactUs']['imgUrl'] = '';				
+				if(trim($_POST[contactUs][overlay])) $this->_options['contactUs']['overlay'] = sanitize_text_field($_POST[contactUs][overlay]); else $this->_options['contactUs']['overlay'] = '';
+				if(trim($_POST[contactUs][animation])) $this->_options['contactUs']['animation'] = sanitize_text_field($_POST[contactUs][animation]); else $this->_options['contactUs']['animation'] = '';
 				if($_POST[contactUs][afterProceed]){
 					if($_POST[contactUs][afterProceed][follow] == 'on'){
 						$this->_options['contactUs']['afterProceed']['follow'] = 1;
@@ -389,6 +400,8 @@ class ProfitQueryFeedbackWidgetsClass
 				if(trim($_POST[callMe][button_color])) $this->_options['callMe']['button_color'] = sanitize_text_field($_POST[callMe][button_color]); else $this->_options['callMe']['button_color'] = '';
 				if(trim($_POST[callMe][img])) $this->_options['callMe']['img'] = sanitize_text_field($_POST[callMe][img]); else $this->_options['callMe']['img'] = '';
 				if(trim($_POST[callMe][imgUrl])) $this->_options['callMe']['imgUrl'] = sanitize_text_field($_POST[callMe][imgUrl]); else $this->_options['callMe']['imgUrl'] = '';				
+				if(trim($_POST[callMe][overlay])) $this->_options['callMe']['overlay'] = sanitize_text_field($_POST[callMe][overlay]); else $this->_options['callMe']['overlay'] = '';
+				if(trim($_POST[callMe][animation])) $this->_options['callMe']['animation'] = sanitize_text_field($_POST[callMe][animation]); else $this->_options['callMe']['animation'] = '';
 				if($_POST[callMe][afterProceed]){
 					if($_POST[callMe][afterProceed][follow] == 'on'){
 						$this->_options['callMe']['afterProceed']['follow'] = 1;
@@ -723,6 +736,57 @@ class ProfitQueryFeedbackWidgetsClass
 							</select></label>
 							</div>
 							<div class="clear"></div>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" id="contactUs_animation_bounce" onclick="contactUsPreview()" name="contactUs[animation]" value="bounceInDown" <?php if($this->_options[contactUs][animation] == 'bounceInDown') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Bounce animation</p>
+							</label>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" id="contactUs_animation_fade" onclick="contactUsPreview()" name="contactUs[animation]" value="fade" <?php if($this->_options[contactUs][animation] == 'fade' || $this->_options[contactUs][animation] == '') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Fading animation</p>
+							</label>
+							<hr>
+							<div class="pq-sm-12 icons" style="padding-left: 0; margin: 27px 0 0;">
+							<label><select id="contactUs_overlay" name="contactUs[overlay]" onchange="contactUsPreview();">
+								    <option value="over_grey" <?php if($this->_options[contactUs][overlay] == 'over_grey') echo 'selected';?>>Color overlay - Grey</option>
+									<option value="over_white" <?php if($this->_options[contactUs][overlay] == 'over_white' || $this->_options[contactUs][overlay] == '') echo 'selected';?>>Color overlay - White</option>
+									<option value="over_yellow" <?php if($this->_options[contactUs][overlay] == 'over_yellow') echo 'selected';?>>Color overlay - Yellow</option>
+									<option value="over_wormwood" <?php if($this->_options[contactUs][overlay] == 'over_wormwood') echo 'selected';?>>Color overlay - Wormwood</option>
+									<option value="over_blue" <?php if($this->_options[contactUs][overlay] == 'over_blue') echo 'selected';?>>Color overlay - Blue</option>
+									<option value="over_green" <?php if($this->_options[contactUs][overlay] == 'over_green') echo 'selected';?>>Color overlay - Green</option>
+									<option value="over_beige" <?php if($this->_options[contactUs][overlay] == 'over_beige') echo 'selected';?>>Color overlay - Beige</option>
+									<option value="over_red" <?php if($this->_options[contactUs][overlay] == 'over_red') echo 'selected';?>>Color overlay - Red</option>
+									<option value="over_iceblue" <?php if($this->_options[contactUs][overlay] == 'over_iceblue') echo 'selected';?>>Color overlay - Iceblue</option>
+									<option value="over_black" <?php if($this->_options[contactUs][overlay] == 'over_black') echo 'selected';?>>Color overlay - Black</option>
+									<option value="over_skyblue" <?php if($this->_options[contactUs][overlay] == 'over_skyblue') echo 'selected';?>>Color overlay - Skyblue</option>
+									<option value="over_lilac" <?php if($this->_options[contactUs][overlay] == 'over_lilac') echo 'selected';?>>Color overlay - Lilac</option>
+									<option value="over_grey_lt" <?php if($this->_options[contactUs][overlay] == 'over_grey_lt') echo 'selected';?>>Color overlay - Grey - Light</option>
+									<option value="over_white_lt" <?php if($this->_options[contactUs][overlay] == 'over_white_lt') echo 'selected';?>>Color overlay - White - Light</option>
+									<option value="over_yellow_lt" <?php if($this->_options[contactUs][overlay] == 'over_yellow_lt') echo 'selected';?>>Color overlay - Yellow - Light</option>
+									<option value="over_wormwood_lt" <?php if($this->_options[contactUs][overlay] == 'over_wormwood_lt') echo 'selected';?>>Color overlay - Wormwood - Light</option>
+									<option value="over_blue_lt" <?php if($this->_options[contactUs][overlay] == 'over_blue_lt') echo 'selected';?>>Color overlay - Blue - Light</option>
+									<option value="over_green_lt" <?php if($this->_options[contactUs][overlay] == 'over_green_lt') echo 'selected';?>>Color overlay - Green - Light</option>
+									<option value="over_beige_lt" <?php if($this->_options[contactUs][overlay] == 'over_beige_lt') echo 'selected';?>>Color overlay - Beige - Light</option>
+									<option value="over_red_lt" <?php if($this->_options[contactUs][overlay] == 'over_red_lt') echo 'selected';?>>Color overlay - Red - Light</option>
+									<option value="over_iceblue_lt" <?php if($this->_options[contactUs][overlay] == 'over_iceblue_lt') echo 'selected';?>>Color overlay - Iceblue - Light</option>
+									<option value="over_black_lt" <?php if($this->_options[contactUs][overlay] == 'over_black_lt') echo 'selected';?>>Color overlay - Black - Light</option>
+									<option value="over_skyblue_lt" <?php if($this->_options[contactUs][overlay] == 'over_skyblue_lt') echo 'selected';?>>Color overlay - Skyblue - Light</option>
+									<option value="over_lilac_lt" <?php if($this->_options[contactUs][overlay] == 'over_lilac_lt') echo 'selected';?>>Color overlay - Lilac - Light</option>
+									<option value="over_grey_solid" <?php if($this->_options[contactUs][overlay] == 'over_grey_solid') echo 'selected';?>>Color overlay - Grey - Solid</option>
+									<option value="over_white_solid" <?php if($this->_options[contactUs][overlay] == 'over_white_solid') echo 'selected';?>>Color overlay - White - Solid</option>
+									<option value="over_yellow_solid" <?php if($this->_options[contactUs][overlay] == 'over_yellow_solid') echo 'selected';?>>Color overlay - Yellow - Solid</option>
+									<option value="over_wormwood_solid" <?php if($this->_options[contactUs][overlay] == 'over_wormwood_solid') echo 'selected';?>>Color overlay - Wormwood - Solid</option>
+									<option value="over_blue_solid" <?php if($this->_options[contactUs][overlay] == 'over_blue_solid') echo 'selected';?>>Color overlay - Blue - Solid</option>
+									<option value="over_green_solid" <?php if($this->_options[contactUs][overlay] == 'over_green_solid') echo 'selected';?>>Color overlay - Green - Solid</option>
+									<option value="over_beige_solid" <?php if($this->_options[contactUs][overlay] == 'over_beige_solid') echo 'selected';?>>Color overlay - Beige - Solid</option>
+									<option value="over_red_solid" <?php if($this->_options[contactUs][overlay] == 'over_red_solid') echo 'selected';?>>Color overlay - Red - Solid</option>
+									<option value="over_iceblue_solid" <?php if($this->_options[contactUs][overlay] == 'over_iceblue_solid') echo 'selected';?>>Color overlay - Iceblue - Solid</option>
+									<option value="over_black_solid" <?php if($this->_options[contactUs][overlay] == 'over_black_solid') echo 'selected';?>>Color overlay - Black - Solid</option>
+									<option value="over_skyblue_solid" <?php if($this->_options[contactUs][overlay] == 'over_skyblue_solid') echo 'selected';?>>Color overlay - Skyblue - Solid</option>
+									<option value="over_lilac_solid" <?php if($this->_options[contactUs][overlay] == 'over_lilac_solid') echo 'selected';?>>Color overlay - Lilac - Solid</option>
+							</select></label>
+							</div>
+							
+							<div class="clear"></div>
 							<label><select id="contactUs_img" name="contactUs[img]" onchange="chagnePopupImg(this.value, 'contactUsFotoBlock', 'contactUsCustomFotoBlock');contactUsPreview();">
 								<option value="" selected >No picture</option>
 								<option value="img_01.png" <?php if($this->_options[contactUs][img] == 'img_01.png') echo 'selected';?>>Question</option>
@@ -757,7 +821,9 @@ class ProfitQueryFeedbackWidgetsClass
 								";
 							?>							
 							
-							<div class="clear"></div>							
+							<div class="clear"></div>
+							<div style="margin: 15px 0 20px;">								
+							</div>
 							<p style="font-family: pt sans narrow; font-size: 19px; margin: 20px 0 10px;">Only Design Live Demo</p>
 							<img src="<?php echo plugins_url('images/browser.png', __FILE__);?>" style="width: 100%; margin-bottom: -6px;" />
 							<div style="transform-origin: 0 0; transform: scale(0.8); width: 125%; height: 450px; box-sizing: border-box; border: 1px solid lightgrey;">
@@ -765,14 +831,20 @@ class ProfitQueryFeedbackWidgetsClass
 							</div>
 							
 							<script>
-								function contactUsPreview(){									
-									var design = document.getElementById('contactUs_typeWindow').value+' pq_top '+document.getElementById('contactUs_background').value+' '+document.getElementById('contactUs_button_color').value;
+								function contactUsPreview(){
+									if(document.getElementById('contactUs_animation_bounce').checked) {
+										var animation = 'pq_animated bounceInDown';
+									} else {
+										var animation = '';
+									}
+									var design = document.getElementById('contactUs_typeWindow').value+' pq_top '+document.getElementById('contactUs_background').value+' '+document.getElementById('contactUs_button_color').value+' '+animation;
 									var img = document.getElementById('contactUs_img').value;
 									var imgUrl = document.getElementById('contactUsCustomFotoBlock').value;
 									var loaderBackground = document.getElementById('contactUs_loader_background').value;									
 									var position = 'pq_left pq_top';
+									var overlay = document.getElementById('contactUs_overlay').value;
 									
-									var previewUrl = 'http://profitquery.com/aio_widgets_iframe_demo.html?utm-campaign=wp_aio_widgets&p=contactUs&design='+design+'&img='+encodeURIComponent(img)+'&imgUrl='+encodeURIComponent(imgUrl)+'&loaderDesign='+loaderBackground+'&position='+position;
+									var previewUrl = 'http://profitquery.com/aio_widgets_iframe_demo_v2.html?utm-campaign=wp_aio_widgets&p=contactUs&design='+design+'&overlay='+encodeURIComponent(overlay)+'&img='+encodeURIComponent(img)+'&imgUrl='+encodeURIComponent(imgUrl)+'&loaderDesign='+loaderBackground+'&position='+position;
 									document.getElementById('contactUsLiveViewIframe').src = previewUrl;									
 									
 								}
@@ -850,7 +922,57 @@ class ProfitQueryFeedbackWidgetsClass
 							</select></label>
 							</div>
 							<div class="clear"></div>
-						
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" id="callMe_animation_bounce" onclick="callMePreview()" name="callMe[animation]" value="bounceInDown" <?php if($this->_options[callMe][animation] == 'bounceInDown') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Bounce animation</p>
+							</label>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" id="callMe_animation_fade" onclick="callMePreview()" name="callMe[animation]" value="fade" <?php if($this->_options[callMe][animation] == 'fade' || $this->_options[callMe][animation] == '') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Fading animation</p>
+							</label>
+							<hr>
+							<div class="pq-sm-12 icons" style="padding-left: 0; margin: 27px 0 0;">
+							<label><select id="callMe_overlay" name="callMe[overlay]" onchange="callMePreview();">
+								    <option value="over_grey" <?php if($this->_options[callMe][overlay] == 'over_grey') echo 'selected';?>>Color overlay - Grey</option>
+									<option value="over_white" <?php if($this->_options[callMe][overlay] == 'over_white' || $this->_options[callMe][overlay] == '') echo 'selected';?>>Color overlay - White</option>
+									<option value="over_yellow" <?php if($this->_options[callMe][overlay] == 'over_yellow') echo 'selected';?>>Color overlay - Yellow</option>
+									<option value="over_wormwood" <?php if($this->_options[callMe][overlay] == 'over_wormwood') echo 'selected';?>>Color overlay - Wormwood</option>
+									<option value="over_blue" <?php if($this->_options[callMe][overlay] == 'over_blue') echo 'selected';?>>Color overlay - Blue</option>
+									<option value="over_green" <?php if($this->_options[callMe][overlay] == 'over_green') echo 'selected';?>>Color overlay - Green</option>
+									<option value="over_beige" <?php if($this->_options[callMe][overlay] == 'over_beige') echo 'selected';?>>Color overlay - Beige</option>
+									<option value="over_red" <?php if($this->_options[callMe][overlay] == 'over_red') echo 'selected';?>>Color overlay - Red</option>
+									<option value="over_iceblue" <?php if($this->_options[callMe][overlay] == 'over_iceblue') echo 'selected';?>>Color overlay - Iceblue</option>
+									<option value="over_black" <?php if($this->_options[callMe][overlay] == 'over_black') echo 'selected';?>>Color overlay - Black</option>
+									<option value="over_skyblue" <?php if($this->_options[callMe][overlay] == 'over_skyblue') echo 'selected';?>>Color overlay - Skyblue</option>
+									<option value="over_lilac" <?php if($this->_options[callMe][overlay] == 'over_lilac') echo 'selected';?>>Color overlay - Lilac</option>
+									<option value="over_grey_lt" <?php if($this->_options[callMe][overlay] == 'over_grey_lt') echo 'selected';?>>Color overlay - Grey - Light</option>
+									<option value="over_white_lt" <?php if($this->_options[callMe][overlay] == 'over_white_lt') echo 'selected';?>>Color overlay - White - Light</option>
+									<option value="over_yellow_lt" <?php if($this->_options[callMe][overlay] == 'over_yellow_lt') echo 'selected';?>>Color overlay - Yellow - Light</option>
+									<option value="over_wormwood_lt" <?php if($this->_options[callMe][overlay] == 'over_wormwood_lt') echo 'selected';?>>Color overlay - Wormwood - Light</option>
+									<option value="over_blue_lt" <?php if($this->_options[callMe][overlay] == 'over_blue_lt') echo 'selected';?>>Color overlay - Blue - Light</option>
+									<option value="over_green_lt" <?php if($this->_options[callMe][overlay] == 'over_green_lt') echo 'selected';?>>Color overlay - Green - Light</option>
+									<option value="over_beige_lt" <?php if($this->_options[callMe][overlay] == 'over_beige_lt') echo 'selected';?>>Color overlay - Beige - Light</option>
+									<option value="over_red_lt" <?php if($this->_options[callMe][overlay] == 'over_red_lt') echo 'selected';?>>Color overlay - Red - Light</option>
+									<option value="over_iceblue_lt" <?php if($this->_options[callMe][overlay] == 'over_iceblue_lt') echo 'selected';?>>Color overlay - Iceblue - Light</option>
+									<option value="over_black_lt" <?php if($this->_options[callMe][overlay] == 'over_black_lt') echo 'selected';?>>Color overlay - Black - Light</option>
+									<option value="over_skyblue_lt" <?php if($this->_options[callMe][overlay] == 'over_skyblue_lt') echo 'selected';?>>Color overlay - Skyblue - Light</option>
+									<option value="over_lilac_lt" <?php if($this->_options[callMe][overlay] == 'over_lilac_lt') echo 'selected';?>>Color overlay - Lilac - Light</option>
+									<option value="over_grey_solid" <?php if($this->_options[callMe][overlay] == 'over_grey_solid') echo 'selected';?>>Color overlay - Grey - Solid</option>
+									<option value="over_white_solid" <?php if($this->_options[callMe][overlay] == 'over_white_solid') echo 'selected';?>>Color overlay - White - Solid</option>
+									<option value="over_yellow_solid" <?php if($this->_options[callMe][overlay] == 'over_yellow_solid') echo 'selected';?>>Color overlay - Yellow - Solid</option>
+									<option value="over_wormwood_solid" <?php if($this->_options[callMe][overlay] == 'over_wormwood_solid') echo 'selected';?>>Color overlay - Wormwood - Solid</option>
+									<option value="over_blue_solid" <?php if($this->_options[callMe][overlay] == 'over_blue_solid') echo 'selected';?>>Color overlay - Blue - Solid</option>
+									<option value="over_green_solid" <?php if($this->_options[callMe][overlay] == 'over_green_solid') echo 'selected';?>>Color overlay - Green - Solid</option>
+									<option value="over_beige_solid" <?php if($this->_options[callMe][overlay] == 'over_beige_solid') echo 'selected';?>>Color overlay - Beige - Solid</option>
+									<option value="over_red_solid" <?php if($this->_options[callMe][overlay] == 'over_red_solid') echo 'selected';?>>Color overlay - Red - Solid</option>
+									<option value="over_iceblue_solid" <?php if($this->_options[callMe][overlay] == 'over_iceblue_solid') echo 'selected';?>>Color overlay - Iceblue - Solid</option>
+									<option value="over_black_solid" <?php if($this->_options[callMe][overlay] == 'over_black_solid') echo 'selected';?>>Color overlay - Black - Solid</option>
+									<option value="over_skyblue_solid" <?php if($this->_options[callMe][overlay] == 'over_skyblue_solid') echo 'selected';?>>Color overlay - Skyblue - Solid</option>
+									<option value="over_lilac_solid" <?php if($this->_options[callMe][overlay] == 'over_lilac_solid') echo 'selected';?>>Color overlay - Lilac - Solid</option>
+							</select></label>
+							</div>
+							
+							<div class="clear"></div>
 							<label><select id="callMe_img" name="callMe[img]" onchange="chagnePopupImg(this.value, 'callMeFotoBlock', 'callMeCustomFotoBlock');callMePreview();">
 								<option value="" selected >No picture</option>
 								<option value="img_01.png" <?php if($this->_options[callMe][img] == 'img_01.png') echo 'selected';?>>Question</option>
@@ -894,13 +1016,19 @@ class ProfitQueryFeedbackWidgetsClass
 							
 							<script>
 								function callMePreview(){
-									var design = document.getElementById('callMe_typeWindow').value+' pq_top '+document.getElementById('callMe_background').value+' '+document.getElementById('callMe_button_color').value;
+									if(document.getElementById('callMe_animation_bounce').checked) {
+										var animation = 'pq_animated bounceInDown';
+									} else {
+										var animation = '';
+									}
+									var design = document.getElementById('callMe_typeWindow').value+' pq_top '+document.getElementById('callMe_background').value+' '+document.getElementById('callMe_button_color').value+' '+animation;
 									var img = document.getElementById('callMe_img').value;
 									var imgUrl = document.getElementById('callMeCustomFotoBlock').value;
 									var loaderBackground = document.getElementById('callMe_loader_background').value;
+									var overlay = document.getElementById('callMe_overlay').value;
 									var position = 'pq_left pq_top';
 																		
-									var previewUrl = 'http://profitquery.com/aio_widgets_iframe_demo.html?utm-campaign=wp_aio_widgets&p=callMe&design='+design+'&img='+encodeURIComponent(img)+'&imgUrl='+encodeURIComponent(imgUrl)+'&loaderDesign='+loaderBackground+'&position='+position;
+									var previewUrl = 'http://profitquery.com/aio_widgets_iframe_demo_v2.html?utm-campaign=wp_aio_widgets&p=callMe&design='+design+'&overlay='+encodeURIComponent(overlay)+'&img='+encodeURIComponent(img)+'&imgUrl='+encodeURIComponent(imgUrl)+'&loaderDesign='+loaderBackground+'&position='+position;
 																		
 									document.getElementById('callMeLiveViewIframe').src = previewUrl;
 									
@@ -911,17 +1039,17 @@ class ProfitQueryFeedbackWidgetsClass
 							</div>
 						
 						<a href="javascript:void(0)" onclick="document.getElementById('Call_Me_Back').style.display='none';"><div class="pq_close"></div></a>
-						</div>						
-					</div>
+						</div>
 						<div class="pq-panel-body" style="background: #F3F3F3; padding: 20px 0 20px; margin: 0 15px;">
 							<div class="pq-sm-12">
 								<div class="pq-sm-10 icons" style="margin: 0 auto; float: none;">
-									<label>										
-										<input type="text" name="adminEmail" value="<?php echo stripslashes($this->_options[adminEmail])?>">
+									<label><p style="text-align: center;">Send email to:</p>									
+										<input type="text" name="adminEmail" value="<?php echo stripslashes($this->_options[adminEmail])?>" style="text-align: center;">
 									</label>
 								</div>
 							</div>
-						</div>
+						</div>						
+					</div>
 						<input type="submit" class="btn_m_red" value="Save changes">
 						<a href="mailto:support@profitquery.com" target="_blank" class="pq_help">Need help?</a>
 						</form>
@@ -1108,13 +1236,81 @@ class ProfitQueryFeedbackWidgetsClass
 							</div>
 							<button type="button" class="pq-btn-link btn-bg" onclick="document.getElementById('collapseservices').style.display='block';" >More Services</button>
 						</div>
+						<div class="clear"></div>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 0px;">
+									<input type="radio" name="follow[animation]" value="bounceInDown" <?php if($this->_options[follow][animation] == 'bounceInDown') echo 'checked';?>  style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Bounce animation</p>
+							</label>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 0px;">
+									<input type="radio" name="follow[animation]" value="fade" <?php if($this->_options[follow][animation] == 'fade' || $this->_options[follow][animation] == '') echo 'checked';?>  style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Fading animation</p>
+							</label>
+						<hr>
+							<div class="pq-sm-12 icons" style="padding-left: 0; margin: 27px 0 0;">
+							<label><select id="follow_overlay" name="follow[overlay]">
+								    <option value="over_grey" <?php if($this->_options[follow][overlay] == 'over_grey') echo 'selected';?>>Color overlay - Grey</option>
+									<option value="over_white" <?php if($this->_options[follow][overlay] == 'over_white' || $this->_options[follow][overlay] == '') echo 'selected';?>>Color overlay - White</option>
+									<option value="over_yellow" <?php if($this->_options[follow][overlay] == 'over_yellow') echo 'selected';?>>Color overlay - Yellow</option>
+									<option value="over_wormwood" <?php if($this->_options[follow][overlay] == 'over_wormwood') echo 'selected';?>>Color overlay - Wormwood</option>
+									<option value="over_blue" <?php if($this->_options[follow][overlay] == 'over_blue') echo 'selected';?>>Color overlay - Blue</option>
+									<option value="over_green" <?php if($this->_options[follow][overlay] == 'over_green') echo 'selected';?>>Color overlay - Green</option>
+									<option value="over_beige" <?php if($this->_options[follow][overlay] == 'over_beige') echo 'selected';?>>Color overlay - Beige</option>
+									<option value="over_red" <?php if($this->_options[follow][overlay] == 'over_red') echo 'selected';?>>Color overlay - Red</option>
+									<option value="over_iceblue" <?php if($this->_options[follow][overlay] == 'over_iceblue') echo 'selected';?>>Color overlay - Iceblue</option>
+									<option value="over_black" <?php if($this->_options[follow][overlay] == 'over_black') echo 'selected';?>>Color overlay - Black</option>
+									<option value="over_skyblue" <?php if($this->_options[follow][overlay] == 'over_skyblue') echo 'selected';?>>Color overlay - Skyblue</option>
+									<option value="over_lilac" <?php if($this->_options[follow][overlay] == 'over_lilac') echo 'selected';?>>Color overlay - Lilac</option>
+									<option value="over_grey_lt" <?php if($this->_options[follow][overlay] == 'over_grey_lt') echo 'selected';?>>Color overlay - Grey - Light</option>
+									<option value="over_white_lt" <?php if($this->_options[follow][overlay] == 'over_white_lt') echo 'selected';?>>Color overlay - White - Light</option>
+									<option value="over_yellow_lt" <?php if($this->_options[follow][overlay] == 'over_yellow_lt') echo 'selected';?>>Color overlay - Yellow - Light</option>
+									<option value="over_wormwood_lt" <?php if($this->_options[follow][overlay] == 'over_wormwood_lt') echo 'selected';?>>Color overlay - Wormwood - Light</option>
+									<option value="over_blue_lt" <?php if($this->_options[follow][overlay] == 'over_blue_lt') echo 'selected';?>>Color overlay - Blue - Light</option>
+									<option value="over_green_lt" <?php if($this->_options[follow][overlay] == 'over_green_lt') echo 'selected';?>>Color overlay - Green - Light</option>
+									<option value="over_beige_lt" <?php if($this->_options[follow][overlay] == 'over_beige_lt') echo 'selected';?>>Color overlay - Beige - Light</option>
+									<option value="over_red_lt" <?php if($this->_options[follow][overlay] == 'over_red_lt') echo 'selected';?>>Color overlay - Red - Light</option>
+									<option value="over_iceblue_lt" <?php if($this->_options[follow][overlay] == 'over_iceblue_lt') echo 'selected';?>>Color overlay - Iceblue - Light</option>
+									<option value="over_black_lt" <?php if($this->_options[follow][overlay] == 'over_black_lt') echo 'selected';?>>Color overlay - Black - Light</option>
+									<option value="over_skyblue_lt" <?php if($this->_options[follow][overlay] == 'over_skyblue_lt') echo 'selected';?>>Color overlay - Skyblue - Light</option>
+									<option value="over_lilac_lt" <?php if($this->_options[follow][overlay] == 'over_lilac_lt') echo 'selected';?>>Color overlay - Lilac - Light</option>
+									<option value="over_grey_solid" <?php if($this->_options[follow][overlay] == 'over_grey_solid') echo 'selected';?>>Color overlay - Grey - Solid</option>
+									<option value="over_white_solid" <?php if($this->_options[follow][overlay] == 'over_white_solid') echo 'selected';?>>Color overlay - White - Solid</option>
+									<option value="over_yellow_solid" <?php if($this->_options[follow][overlay] == 'over_yellow_solid') echo 'selected';?>>Color overlay - Yellow - Solid</option>
+									<option value="over_wormwood_solid" <?php if($this->_options[follow][overlay] == 'over_wormwood_solid') echo 'selected';?>>Color overlay - Wormwood - Solid</option>
+									<option value="over_blue_solid" <?php if($this->_options[follow][overlay] == 'over_blue_solid') echo 'selected';?>>Color overlay - Blue - Solid</option>
+									<option value="over_green_solid" <?php if($this->_options[follow][overlay] == 'over_green_solid') echo 'selected';?>>Color overlay - Green - Solid</option>
+									<option value="over_beige_solid" <?php if($this->_options[follow][overlay] == 'over_beige_solid') echo 'selected';?>>Color overlay - Beige - Solid</option>
+									<option value="over_red_solid" <?php if($this->_options[follow][overlay] == 'over_red_solid') echo 'selected';?>>Color overlay - Red - Solid</option>
+									<option value="over_iceblue_solid" <?php if($this->_options[follow][overlay] == 'over_iceblue_solid') echo 'selected';?>>Color overlay - Iceblue - Solid</option>
+									<option value="over_black_solid" <?php if($this->_options[follow][overlay] == 'over_black_solid') echo 'selected';?>>Color overlay - Black - Solid</option>
+									<option value="over_skyblue_solid" <?php if($this->_options[follow][overlay] == 'over_skyblue_solid') echo 'selected';?>>Color overlay - Skyblue - Solid</option>
+									<option value="over_lilac_solid" <?php if($this->_options[follow][overlay] == 'over_lilac_solid') echo 'selected';?>>Color overlay - Lilac - Solid</option>
+							</select></label>
+							</div>
+							
+							<div class="clear"></div>
 							<div class="pq-sm-6 icons" style="padding-left: 0; margin: 20px 0;">
+							<label><div class="pq_box">
+								<p>After Sharing Sidebar</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="sharingSideBar[afterProceed][follow]" <?php if((int)$this->_options[sharingSideBar][afterProceed][follow] == 1) echo 'checked';?>></div>
+							</div></label>
+							<label><div class="pq_box">
+								<p>After Image Sharer</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="imageSharer[afterProceed][follow]" <?php if((int)$this->_options[imageSharer][afterProceed][follow] == 1) echo 'checked';?>></div>
+							</div></label>
+							<label><div class="pq_box">
+								<p>After Marketing Bar</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="subscribeBar[afterProceed][follow]" <?php if((int)$this->_options[subscribeBar][afterProceed][follow] == 1) echo 'checked';?>></div>
+							</div></label>
+							</div>
+							<div class="pq-sm-6 icons" style="padding-right: 0; margin: 20px 0;">
+							<label><div class="pq_box">
+								<p>After Exit Popup</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="subscribeExit[afterProceed][follow]" <?php if((int)$this->_options[subscribeExit][afterProceed][follow] == 1) echo 'checked';?>></div>
+							</div></label>
 							<label><div class="pq_box">
 								<p>After Contact Form</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
 								<input type="checkbox" name="contactUs[afterProceed][follow]" <?php if((int)$this->_options[contactUs][afterProceed][follow] == 1) echo 'checked';?>></div>
 							</div></label>
-							</div>
-							<div class="pq-sm-6 icons" style="padding-right: 0; margin: 20px 0;">														
 							<label><div class="pq_box">
 								<p>After Call Me Back</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
 								<input type="checkbox" name="callMe[afterProceed][follow]" <?php if((int)$this->_options[callMe][afterProceed][follow] == 1) echo 'checked';?>></div>
@@ -1160,13 +1356,80 @@ class ProfitQueryFeedbackWidgetsClass
 								";
 							?>
 							<div class="clear"></div>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" name="thankPopup[animation]" value="bounceInDown" <?php if($this->_options[thankPopup][animation] == 'bounceInDown') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Bounce animation</p>
+							</label>
+							<label style="width: 49%; display: inline-block; margin: 5px 0 10px;">
+									<input type="radio" name="thankPopup[animation]" value="fade" <?php if($this->_options[thankPopup][animation] == 'fade' || $this->_options[thankPopup][animation] == '') echo 'checked';?> style="display: inline-block; float: left; margin: 3px 10px 3px 0;">
+									<p>Fading animation</p>
+							</label>
+							<hr>
+							<div class="pq-sm-12 icons" style="padding-left: 0; margin: 27px 0 0;">
+							<label><select id="subscribeBar_overlay" onchange="subscribeBarPreview();" name="subscribeBar[overlay]">
+								    <option value="over_grey" <?php if($this->_options[subscribeBar][overlay] == 'over_grey') echo 'selected';?>>Color overlay - Grey</option>
+									<option value="over_white" <?php if($this->_options[subscribeBar][overlay] == 'over_white' || $this->_options[subscribeBar][overlay] == '') echo 'selected';?>>Color overlay - White</option>
+									<option value="over_yellow" <?php if($this->_options[subscribeBar][overlay] == 'over_yellow') echo 'selected';?>>Color overlay - Yellow</option>
+									<option value="over_wormwood" <?php if($this->_options[subscribeBar][overlay] == 'over_wormwood') echo 'selected';?>>Color overlay - Wormwood</option>
+									<option value="over_blue" <?php if($this->_options[subscribeBar][overlay] == 'over_blue') echo 'selected';?>>Color overlay - Blue</option>
+									<option value="over_green" <?php if($this->_options[subscribeBar][overlay] == 'over_green') echo 'selected';?>>Color overlay - Green</option>
+									<option value="over_beige" <?php if($this->_options[subscribeBar][overlay] == 'over_beige') echo 'selected';?>>Color overlay - Beige</option>
+									<option value="over_red" <?php if($this->_options[subscribeBar][overlay] == 'over_red') echo 'selected';?>>Color overlay - Red</option>
+									<option value="over_iceblue" <?php if($this->_options[subscribeBar][overlay] == 'over_iceblue') echo 'selected';?>>Color overlay - Iceblue</option>
+									<option value="over_black" <?php if($this->_options[subscribeBar][overlay] == 'over_black') echo 'selected';?>>Color overlay - Black</option>
+									<option value="over_skyblue" <?php if($this->_options[subscribeBar][overlay] == 'over_skyblue') echo 'selected';?>>Color overlay - Skyblue</option>
+									<option value="over_lilac" <?php if($this->_options[subscribeBar][overlay] == 'over_lilac') echo 'selected';?>>Color overlay - Lilac</option>
+									<option value="over_grey_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_grey_lt') echo 'selected';?>>Color overlay - Grey - Light</option>
+									<option value="over_white_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_white_lt') echo 'selected';?>>Color overlay - White - Light</option>
+									<option value="over_yellow_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_yellow_lt') echo 'selected';?>>Color overlay - Yellow - Light</option>
+									<option value="over_wormwood_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_wormwood_lt') echo 'selected';?>>Color overlay - Wormwood - Light</option>
+									<option value="over_blue_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_blue_lt') echo 'selected';?>>Color overlay - Blue - Light</option>
+									<option value="over_green_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_green_lt') echo 'selected';?>>Color overlay - Green - Light</option>
+									<option value="over_beige_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_beige_lt') echo 'selected';?>>Color overlay - Beige - Light</option>
+									<option value="over_red_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_red_lt') echo 'selected';?>>Color overlay - Red - Light</option>
+									<option value="over_iceblue_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_iceblue_lt') echo 'selected';?>>Color overlay - Iceblue - Light</option>
+									<option value="over_black_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_black_lt') echo 'selected';?>>Color overlay - Black - Light</option>
+									<option value="over_skyblue_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_skyblue_lt') echo 'selected';?>>Color overlay - Skyblue - Light</option>
+									<option value="over_lilac_lt" <?php if($this->_options[subscribeBar][overlay] == 'over_lilac_lt') echo 'selected';?>>Color overlay - Lilac - Light</option>
+									<option value="over_grey_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_grey_solid') echo 'selected';?>>Color overlay - Grey - Solid</option>
+									<option value="over_white_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_white_solid') echo 'selected';?>>Color overlay - White - Solid</option>
+									<option value="over_yellow_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_yellow_solid') echo 'selected';?>>Color overlay - Yellow - Solid</option>
+									<option value="over_wormwood_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_wormwood_solid') echo 'selected';?>>Color overlay - Wormwood - Solid</option>
+									<option value="over_blue_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_blue_solid') echo 'selected';?>>Color overlay - Blue - Solid</option>
+									<option value="over_green_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_green_solid') echo 'selected';?>>Color overlay - Green - Solid</option>
+									<option value="over_beige_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_beige_solid') echo 'selected';?>>Color overlay - Beige - Solid</option>
+									<option value="over_red_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_red_solid') echo 'selected';?>>Color overlay - Red - Solid</option>
+									<option value="over_iceblue_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_iceblue_solid') echo 'selected';?>>Color overlay - Iceblue - Solid</option>
+									<option value="over_black_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_black_solid') echo 'selected';?>>Color overlay - Black - Solid</option>
+									<option value="over_skyblue_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_skyblue_solid') echo 'selected';?>>Color overlay - Skyblue - Solid</option>
+									<option value="over_lilac_solid" <?php if($this->_options[subscribeBar][overlay] == 'over_lilac_solid') echo 'selected';?>>Color overlay - Lilac - Solid</option>
+							</select></label>
+							</div>
+							
+							<div class="clear"></div>
 							<div class="pq-sm-6 icons" style="padding-left: 0; margin: 20px 0;">
+							<label><div class="pq_box">
+								<p>After Sharing Sidebar</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="sharingSideBar[afterProceed][thank]" <?php if((int)$this->_options[sharingSideBar][afterProceed][thank] == 1) echo 'checked';?>></div>
+							</div></label>
+							<label><div class="pq_box">
+								<p>After Image Sharer</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="imageSharer[afterProceed][thank]" <?php if((int)$this->_options[imageSharer][afterProceed][thank] == 1) echo 'checked';?>></div>
+							</div></label>
+							<label><div class="pq_box">
+								<p>After Marketing Bar</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="subscribeBar[afterProceed][thank]" <?php if((int)$this->_options[subscribeBar][afterProceed][thank] == 1) echo 'checked';?>></div>
+							</div></label>
+							</div>
+							<div class="pq-sm-6 icons" style="padding-right: 0; margin: 20px 0;">
+							<label><div class="pq_box">
+								<p>After Exit Popup</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
+								<input type="checkbox" name="subscribeExit[afterProceed][thank]" <?php if((int)$this->_options[subscribeExit][afterProceed][thank] == 1) echo 'checked';?>></div>
+							</div></label>
 							<label><div class="pq_box">
 								<p>After Contact Form</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
 								<input type="checkbox" name="contactUs[afterProceed][thank]" <?php if((int)$this->_options[contactUs][afterProceed][thank] == 1) echo 'checked';?>></div>
 							</div></label>
-							</div>
-							<div class="pq-sm-6 icons" style="padding-right: 0; margin: 20px 0;">
 							<label><div class="pq_box">
 								<p>After Call Me Back</p><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on bootstrap-switch-id-switch-size bootstrap-switch-animate bootstrap-switch-mini bootstrap-switch-success">
 								<input type="checkbox" name="callMe[afterProceed][thank]" <?php if((int)$this->_options[callMe][afterProceed][thank] == 1) echo 'checked';?>></div>
@@ -1228,6 +1491,13 @@ class ProfitQueryFeedbackWidgetsClass
 			<h5>Get Profitquery Pro version</h5>
 			<a href="http://profitquery.com/promo.html" target="_blank"><input type="button" class="btn_m_red" style="width: initial; margin: 20px auto 8px;" value="Learn more"></a>
 		</div>
+		
+		<div class="pq-sm-10" style="overflow: hidden; padding: 20px; margin: 30px 0 25px; background: white;">				
+			<h5>Write your article. Promote your blog.</h5>
+			<p>Write your article. Promote your blog.You can write any article about Profitquery for your customers, friends and <a href="http://profitquery.com/blog.html#send" target="_blank">send </a> for us your link or content. We paste your work on our <a href="http://profitquery.com/blog.html" target="_blank">blog</a>. Use your native language.</p>
+		<a href="http://profitquery.com/blog.html#send" target="_blank"><input type="button" class="btn_m_white" value="Send your article"></a>
+		</div>
+		
 	</div>
 </div>
 </div>		
